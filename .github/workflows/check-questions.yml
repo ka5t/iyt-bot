@@ -1,0 +1,28 @@
+name: Check questions
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  test:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/setup-python@v4
+      with:
+        python-version-file: '.python-version' # Read python version from a file
+
+    - name: Install requirements
+      run: |
+        pip install -r requirements.txt
+
+    - name: Check questions
+      run: |
+        python src/check_questions.py
