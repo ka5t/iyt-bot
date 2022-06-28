@@ -1,0 +1,5 @@
+[project]
+name = "iyt-bot"
+
+[tool.black]
+line-length = 160

@@ -1,13 +1,14 @@
-name: Check questions
+name: Check python
 
 on:
   pull_request:
     paths:
-      - "resources/**"
+      - "src/**"
+      - "tests/**"
 
 jobs:
 
-  test_questions:
+  run_tests:
 
     runs-on: ubuntu-20.04
 
@@ -21,7 +22,8 @@ jobs:
     - name: Install requirements
       run: |
         pip install -r requirements.txt
+        pip install -r requirements-dev.txt
 
     - name: Check questions
       run: |
-        python src/check_questions.py
+        tox .
