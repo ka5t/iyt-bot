@@ -12,12 +12,24 @@ jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Get latest version
+        uses: actions-ecosystem/action-get-latest-tag@v1
+        id: get-latest-tag
+
+      # TODO: semver?
+      - name: Bump version
+        uses: actions-ecosystem/action-bump-semver@v1
+        id: bump-semver
+        with:
+          current_version: ${{ steps.get-latest-tag.outputs.tag }}
+          level: patch
 
       - name: Log in to the Container registry
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
@@ -37,5 +49,36 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.bump-semver.outputs.new_version }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Publish tag
+        uses: actions-ecosystem/action-push-tag@v1
+        with:
+          tag: ${{ steps.bump-semver.outputs.new_version }}
+
+    outputs:
+      version: ${{ steps.bump-semver.outputs.new_version }}
+
+  deploy:
+    needs: build-and-push-image
+    runs-on: tlg
+    permissions:
+      packages: read
+
+    steps:
+      # TODO: improve this
+      - name: Log in to the Container registry
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout repository
+        run: |
+          export TOKEN="${{ secrets.MY_BOT_TOKEN }}"
+          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.build-and-push-image.outputs.version }}
+          docker stop iytbot
+          docker rm iytbot
+          docker run --name iytbot -d -v /opt/iyt_bot:/opt/iyt_bot -e BOT_STORAGE_LOCATION="/opt/iyt_bot/storage.pickle" -e BOT_TOKEN="${TOKEN}" ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.build-and-push-image.outputs.version }}
