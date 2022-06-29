@@ -1,1 +1,2 @@
 PyYAML==5.4.1
+pyTelegramBotAPI==4.6.0
