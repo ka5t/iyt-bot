@@ -57,14 +57,17 @@ if __name__ == "__main__":
             iyt_bot.report_missing_user(msg.chat.id, bot, phrases)
         iyt_bot.ask_question(msg.chat.id, bot, storage)
 
-    def shutdown(signum, frame):
+    def handle_signals(signum: int, frame):
         dump = storage.save()
-        log.info(f"Stopping bot. Database was saved to {dump}")
-        exit(0)
+        log.info(f"Database was saved to {dump}")
+        if signum != signal.SIGUSR2:
+            log.info(f"Stopping bot.")
+            exit(0)
 
-    signal.signal(signal.SIGTERM, shutdown)
-    signal.signal(signal.SIGHUP, shutdown)
-    signal.signal(signal.SIGINT, shutdown)
+    signal.signal(signal.SIGTERM, handle_signals)
+    signal.signal(signal.SIGHUP, handle_signals)
+    signal.signal(signal.SIGINT, handle_signals)
+    signal.signal(signal.SIGUSR2, handle_signals)
 
     while True:
         try:
