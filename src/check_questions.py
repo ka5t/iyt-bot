@@ -5,7 +5,6 @@ import traceback
 from utils import questionnaire
 
 
-
 class QuestionsCheckError(Exception):
     """Base class for custom exceptions"""
 
