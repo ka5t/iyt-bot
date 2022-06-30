@@ -16,13 +16,14 @@ def ask_question(uid: str, bot: telebot.TeleBot, storage: BaseStorage) -> None:
     buttons = [types.KeyboardButton(button) for button in buttons]
     markup.add(*buttons)
 
-    if "question" in question:
+    if "image" in question:
+        log.debug(f"Sending img question to {uid}")
+        caption = question.get("question", None)
+        with open(question["image"], "rb") as img:
+            bot.send_photo(uid, img, reply_markup=markup, caption=caption)
+    else:
         log.debug(f"Sending text question to {uid}")
         bot.send_message(uid, question["question"], reply_markup=markup)
-    else:
-        log.debug(f"Sending img question to {uid}")
-        with open(question["image"], "rb") as img:
-            bot.send_photo(uid, img, reply_markup=markup)
 
 
 def _check_answer(uid: str, answer: str, storage: BaseStorage) -> tuple[bool, str]:

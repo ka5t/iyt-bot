@@ -61,7 +61,7 @@ if __name__ == "__main__":
         dump = storage.save()
         log.info(f"Database was saved to {dump}")
         if signum != signal.SIGUSR2:
-            log.info(f"Stopping bot.")
+            log.info("Stopping bot.")
             exit(0)
 
     signal.signal(signal.SIGTERM, handle_signals)
