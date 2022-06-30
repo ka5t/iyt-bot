@@ -12,7 +12,7 @@ def ask_question(uid: str, bot: telebot.TeleBot, storage: BaseStorage) -> None:
     log.debug(f"Stored question {name} for {uid}")
 
     buttons = question["options"]
-    markup = types.ReplyKeyboardMarkup(row_width=2)
+    markup = types.ReplyKeyboardMarkup(row_width=1)
     buttons = [types.KeyboardButton(button) for button in buttons]
     markup.add(*buttons)
 
@@ -21,8 +21,9 @@ def ask_question(uid: str, bot: telebot.TeleBot, storage: BaseStorage) -> None:
         bot.send_message(uid, question["question"], reply_markup=markup)
     else:
         log.debug(f"Sending img question to {uid}")
+        caption = question.get("question", None)
         with open(question["image"], "rb") as img:
-            bot.send_photo(uid, img, reply_markup=markup)
+            bot.send_photo(uid, img, reply_markup=markup, caption=caption)
 
 
 def _check_answer(uid: str, answer: str, storage: BaseStorage) -> tuple[bool, str]:

@@ -11,12 +11,6 @@ class QuestionsCheckError(Exception):
     pass
 
 
-class BothQuestionAndImageError(QuestionsCheckError):
-    """Raised when both `question` and `image` fields are presented in the file"""
-
-    pass
-
-
 class CorrectOptionsMissmatchError(QuestionsCheckError):
     """Raised when there are less than 2 options in the file"""
 
@@ -47,8 +41,6 @@ if __name__ == "__main__":
         try:
             data = questionnaire._get_question(q)
             if "image" in data:
-                if "question" in data:
-                    raise BothQuestionAndImageError()
                 if not os.path.exists(data["image"]):
                     raise ImageNotFoundError()
             elif "question" not in data:
