@@ -6,6 +6,7 @@ import sys
 import telebot
 import traceback
 from utils import config
+from utils import exceptions
 from utils.storage.memory import NaiveStorage
 from utils import iyt_bot
 from utils import lang_pack
@@ -53,7 +54,7 @@ if __name__ == "__main__":
     def handle_message(msg):
         try:
             iyt_bot.check_answer(msg.chat.id, msg.text, bot, storage, phrases)
-        except KeyError:
+        except (KeyError, exceptions.CouldNotFindQuestionForUser):
             iyt_bot.report_missing_user(msg.chat.id, bot, phrases)
         iyt_bot.ask_question(msg.chat.id, bot, storage)
 

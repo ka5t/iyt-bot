@@ -2,6 +2,7 @@ import logging as log
 import telebot
 from telebot import types
 from utils import questionnaire
+from utils import exceptions
 from utils.storage.base import BaseStorage
 
 
@@ -12,7 +13,8 @@ def ask_question(uid: str, bot: telebot.TeleBot, storage: BaseStorage) -> None:
     log.debug(f"Stored question {name} for {uid}")
 
     buttons = question["options"]
-    markup = types.ReplyKeyboardMarkup(row_width=2)
+    row_width = 2 if max([len(x) for x in question["options"]]) < 72 else 1
+    markup = types.ReplyKeyboardMarkup(row_width=row_width)  # TODO: inline kb?
     buttons = [types.KeyboardButton(button) for button in buttons]
     markup.add(*buttons)
 
@@ -38,14 +40,17 @@ def _check_answer(uid: str, answer: str, storage: BaseStorage) -> tuple[bool, st
 
 
 def check_answer(uid: str, answer: str, bot: telebot.TeleBot, storage: BaseStorage, phrases: dict[str, str]):
-    success, correct = _check_answer(uid, answer, storage)
-    msg = phrases["correct"] if success else f"{phrases['incorrect']} {correct}"
-    log.debug(f"Sending results of {uid} answer")
-    bot.send_message(
-        uid,
-        msg,
-        reply_markup=types.ReplyKeyboardRemove(selective=False),
-    )
+    try:
+        success, correct = _check_answer(uid, answer, storage)
+        msg = phrases["correct"] if success else f"{phrases['incorrect']} {correct}"
+        log.debug(f"Sending results of {uid} answer")
+        bot.send_message(
+            uid,
+            msg,
+            reply_markup=types.ReplyKeyboardRemove(selective=False),
+        )
+    except FileNotFoundError:
+        raise exceptions.CouldNotFindQuestionForUser("Could not find question for {uid}")
 
 
 def report_missing_user(uid: str, bot: telebot.TeleBot, phrases: dict[str, str]) -> None:
