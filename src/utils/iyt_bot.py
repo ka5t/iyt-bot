@@ -13,7 +13,7 @@ def ask_question(uid: str, bot: telebot.TeleBot, storage: BaseStorage) -> None:
     log.debug(f"Stored question {name} for {uid}")
 
     buttons = question["options"]
-    row_width = 2 if max([len(x) for x in question["options"]]) < 72 else 1
+    row_width = 2 if max([len(str(x)) for x in question["options"]]) < 72 else 1
     markup = types.ReplyKeyboardMarkup(row_width=row_width)  # TODO: inline kb?
     buttons = [types.KeyboardButton(button) for button in buttons]
     markup.add(*buttons)
