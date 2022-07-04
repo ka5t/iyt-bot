@@ -7,6 +7,7 @@ import telebot
 import traceback
 from utils import config
 from utils import exceptions
+from utils.storage.base import BaseStorage
 from utils.storage.memory import NaiveStorage
 from utils import iyt_bot
 from utils import lang_pack
@@ -26,6 +27,31 @@ def parse_args() -> argparse.Namespace:
 
     args = parser.parse_args()
     return args
+
+
+def _edit_message(bot: telebot.TeleBot, call, text: str) -> None:
+    msg_is_photo = call.message.text is None
+
+    if msg_is_photo:
+        bot.edit_message_caption(
+            chat_id=call.message.chat.id,
+            message_id=call.message.message_id,
+            caption=f"{call.message.caption}\n\n{text}",
+            reply_markup=None,
+            parse_mode="Markdown",
+        )
+    else:
+        bot.edit_message_text(
+            chat_id=call.message.chat.id, message_id=call.message.message_id, text=f"{call.message.text}\n\n{text}", reply_markup=None, parse_mode="Markdown"
+        )
+
+
+def _process_message(uid: str, answer: str, bot: telebot.TeleBot, storage: BaseStorage, phrases: dict[str, str]) -> None:
+    try:
+        iyt_bot.check_answer(uid, answer, bot, storage, phrases)
+    except (KeyError, exceptions.CouldNotFindQuestionForUser):
+        iyt_bot.report_missing_user(uid, bot, phrases)
+    iyt_bot.ask_question(uid, bot, storage, conf.keyboard_type)
 
 
 if __name__ == "__main__":
@@ -48,17 +74,21 @@ if __name__ == "__main__":
     @bot.message_handler(commands=["start"])
     def send_welcome(msg):
         bot.send_message(msg.chat.id, phrases["greeting"])
-        iyt_bot.ask_question(msg.chat.id, bot, storage)
+        iyt_bot.ask_question(msg.chat.id, bot, storage, conf.keyboard_type)
 
     @bot.message_handler(content_types=["text"])
     def handle_message(msg):
-        try:
-            iyt_bot.check_answer(msg.chat.id, msg.text, bot, storage, phrases)
-        except (KeyError, exceptions.CouldNotFindQuestionForUser):
-            iyt_bot.report_missing_user(msg.chat.id, bot, phrases)
-        iyt_bot.ask_question(msg.chat.id, bot, storage)
+        log.debug(f"Handling msg {msg}")
+        _process_message(msg.chat.id, msg.text, bot, storage, phrases)
+
+    @bot.callback_query_handler(func=lambda call: True)
+    def handle_inline_answer(call):
+        log.debug(f"Handling inline {call}")
+        _edit_message(bot, call, f"`> {phrases['your_inline_choice_was']} {call.data}`")
+        _process_message(call.from_user.id, call.data, bot, storage, phrases)
 
     def handle_signals(signum: int, frame):
+        log.debug(f"Handling signal {signum}")
         dump = storage.save()
         log.info(f"Database was saved to {dump}")
         if signum != signal.SIGUSR2:

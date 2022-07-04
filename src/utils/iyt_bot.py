@@ -6,17 +6,35 @@ from utils import exceptions
 from utils.storage.base import BaseStorage
 
 
-def ask_question(uid: str, bot: telebot.TeleBot, storage: BaseStorage) -> None:
+def reply_keyboard(options: list[str]) -> types.ReplyKeyboardMarkup:
+    row_width = 2 if max([len(str(x)) for x in options]) < 72 else 1
+    markup = types.ReplyKeyboardMarkup(row_width=row_width)
+    buttons = [types.KeyboardButton(option) for option in options]
+    markup.add(*buttons)
+    return markup
+
+
+def inline_keyboard(options: list[str]) -> types.InlineKeyboardMarkup:
+    row_width = 2 if max([len(str(x)) for x in options]) < 25 else 1
+    markup = types.InlineKeyboardMarkup(row_width=row_width)
+    buttons = [types.InlineKeyboardButton(option, callback_data=option) for option in options]
+    markup.add(*buttons)
+    return markup
+
+
+KEYBOARDS = {
+    "inline": inline_keyboard,
+    "reply": reply_keyboard,
+}
+
+
+def ask_question(uid: str, bot: telebot.TeleBot, storage: BaseStorage, keyboardType: str = "inline") -> None:
     log.debug(f"Asking {uid} question")
     name, question = questionnaire.pick_question()
     storage.set(uid, name)
     log.debug(f"Stored question {name} for {uid}")
 
-    buttons = question["options"]
-    row_width = 2 if max([len(str(x)) for x in question["options"]]) < 72 else 1
-    markup = types.ReplyKeyboardMarkup(row_width=row_width)  # TODO: inline kb?
-    buttons = [types.KeyboardButton(button) for button in buttons]
-    markup.add(*buttons)
+    markup = KEYBOARDS[keyboardType]([str(o) for o in question["options"]])
 
     if "image" in question:
         log.debug(f"Sending img question to {uid}")
@@ -34,13 +52,14 @@ def _check_answer(uid: str, answer: str, storage: BaseStorage) -> tuple[bool, st
     """
     log.debug(f"Checking if {uid} provided a correct answer")
     q = storage.get(uid)
-    correct_answer = questionnaire.get_answer(q)
+    correct_answer = str(questionnaire.get_answer(q))
     log.debug(f"{uid} provided `{answer}`; correct one is `{correct_answer}`")
     return (answer == correct_answer, correct_answer)
 
 
 def check_answer(uid: str, answer: str, bot: telebot.TeleBot, storage: BaseStorage, phrases: dict[str, str]):
     try:
+        log.debug(f"Checkin {answer}")
         success, correct = _check_answer(uid, answer, storage)
         msg = phrases["correct"] if success else f"{phrases['incorrect']} {correct}"
         log.debug(f"Sending results of {uid} answer")

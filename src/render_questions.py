@@ -16,4 +16,4 @@ if __name__ == "__main__":
             else:
                 out.append(f"* {opt}")
     with open("QUESTIONS.md", "w") as f:
-        f.write("\n".join(out))
+        f.write("\n".join(out) + "\n")

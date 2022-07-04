@@ -35,6 +35,13 @@ class NoQuestionError(QuestionsCheckError):
     pass
 
 
+class TooLongOption(QuestionsCheckError):
+    """Raised when some of the options are longer than 55 symbols (what can be seen on button)"""
+
+    pass
+
+
+# flake8: noqa: C901
 if __name__ == "__main__":
     errors = []
     for q in questionnaire._list_questions():
@@ -47,6 +54,9 @@ if __name__ == "__main__":
                 raise NoQuestionError()
             if len(data["options"]) < 2:
                 raise NotEnoughOptionsError()
+            for op in data["options"]:
+                if len(str(op).encode("utf-8")) > 55:
+                    raise TooLongOption()
             if data["correct"] not in data["options"]:
                 raise CorrectOptionsMissmatchError()
         except Exception:

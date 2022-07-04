@@ -2,3 +2,4 @@
 bot_token: "set your bot token using @BotFather"
 bot_storage_type: "memory"
 bot_language: "ru"
+bot_keyboard_type: "inline"
