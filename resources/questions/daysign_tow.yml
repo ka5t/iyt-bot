@@ -1,0 +1,14 @@
+image: daysign_tow.png
+question: |
+  Что это?
+
+  A) Тральщик
+  B) Лоцман
+  C) Буксир
+  D) Рыбак
+options:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+correct: "C"

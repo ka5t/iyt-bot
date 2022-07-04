@@ -1,0 +1,14 @@
+image: passing.png
+question: |
+  Какие из судов (согласно Правилу 13) совершают обгон?
+
+  A) B
+  B) B, D
+  C) B, C
+  D) C, D
+options:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+correct: "C"

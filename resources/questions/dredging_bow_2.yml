@@ -1,0 +1,12 @@
+image: dredging_bow.png
+question: |
+  Что делать?
+
+  A) Разворачиваться и уезжать
+  B) Обходить справа
+  C) Обходить слева
+options:
+  - "A"
+  - "B"
+  - "C"
+correct: "B"
