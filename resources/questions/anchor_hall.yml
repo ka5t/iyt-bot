@@ -1,0 +1,14 @@
+image: hall_anchor.png
+question: |
+  Что это?
+
+  A) Якорь Данфорта/Матросова (Danforth Anchor)
+  B) Якорь Холла (Hall ahcnor)
+  C) Якорь Дельта/Кобра (Delta anchor)
+  D) Якорь Брюса (Bruce anchor)
+options:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+correct: "B"

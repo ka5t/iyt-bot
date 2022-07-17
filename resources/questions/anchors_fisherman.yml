@@ -1,0 +1,14 @@
+image: fisherman_anchor.png
+question: |
+  Что это?
+
+  A) Якорь Брюса (Bruce anchor)
+  B) Якорь Данфорта/Матросова (Danforth Anchor)
+  C) Адмиралтейский якорь (Fisherman/Admiralty ahcnor)
+  D) Якорь Кошка (Grapnel anchor)
+options:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+correct: "C"

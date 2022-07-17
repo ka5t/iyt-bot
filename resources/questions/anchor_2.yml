@@ -1,0 +1,13 @@
+question: |
+  Этот якорь хорош в использовании на каменистом дне
+
+  A) Якорь Кошка (Grapnel anchor)
+  B) Якорь Плуг (CQR/Plough type ahcnor)
+  C) Якорь Дельта/Кобра (Delta anchor)
+  D) Якорь Брюса (Bruce anchor)
+options:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+correct: "D"

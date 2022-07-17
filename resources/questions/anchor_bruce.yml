@@ -1,0 +1,14 @@
+image: bruce_anchor.png
+question: |
+  Что это?
+
+  A) Якорь Плуг (CQR/Plough type ahcnor)
+  B) Якорь Кошка (Grapnel anchor)
+  C) Якорь Дельта/Кобра (Delta anchor)
+  D) Якорь Брюса (Bruce anchor)
+options:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+correct: "D"

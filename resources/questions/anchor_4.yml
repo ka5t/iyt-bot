@@ -1,0 +1,13 @@
+question: |
+  Этот якорь очень удобен в хранении (может складываться) и пригоден практически на любых грунтах
+
+  A) Якорь Кошка (Grapnel anchor)
+  B) Якорь Плуг (CQR/Plough type ahcnor)
+  C) Якорь Холла (Hall ahcnor)
+  D) Якорь Дельта/Кобра (Delta anchor)
+options:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+correct: "A"

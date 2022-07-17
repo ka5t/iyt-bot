@@ -1,0 +1,14 @@
+image: delta_anchor.png
+question: |
+  Что это?
+
+  A) Якорь Данфорта/Матросова (Danforth Anchor)
+  B) Якорь Брюса (Bruce anchor)
+  C) Якорь Дельта/Кобра (Delta anchor)
+  D) Якорь Плуг (CQR/Plough type ahcnor)
+options:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+correct: "C"

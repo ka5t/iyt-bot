@@ -9,7 +9,7 @@ if __name__ == "__main__":
         if "image" in data:
             out.append(f"![{q}]({data['image']})")
         if "question" in data:
-            out.append(f"## {data['question']}")
+            out.append(f"<h3><pre>{data['question']}</pre></h3>")
         for opt in data["options"]:
             if data["correct"] == opt:
                 out.append(f"* **CORRECT: {opt}**")

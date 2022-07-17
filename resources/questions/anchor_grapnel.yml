@@ -1,0 +1,14 @@
+image: grapnel_anchor.png
+question: |
+  Что это?
+
+  A) Якорь Плуг (CQR/Plough type ahcnor)
+  B) Якорь Холла (Hall ahcnor)
+  C) Якорь Кошка (Grapnel anchor)
+  D) Якорь Дельта/Кобра (Delta anchor)
+options:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+correct: "C"

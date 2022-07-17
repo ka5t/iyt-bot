@@ -1,0 +1,14 @@
+image: anchor_plough.png
+question: |
+  Что это?
+
+  A) Якорь Дельта/Кобра (Delta anchor)
+  B) Якорь Плуг (CQR/Plough type ahcnor)
+  C) Адмиралтейский якорь (Fisherman/Admiralty ahcnor)
+  D) Якорь Кошка (Grapnel anchor)
+options:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+correct: "B"
