@@ -1,0 +1,13 @@
+question: |
+  Это облако НЕ является облаком нижнего слоя
+
+  A) Слоистые (Stratus, St)
+  B) Перисто-слоистые (Cirrostratus, Cs)
+  C) Слоисто-кучевые (Stratocumulus, Sc)
+  D) Кучевые (Cumulus, Cu)
+options:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+correct: "B"

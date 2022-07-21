@@ -1,0 +1,14 @@
+image: cloud_altocumulus.png
+question: |
+  Какие это облака?
+
+  A. Высоко-кучевые (Altocumulus, Ac)
+  B. Слоисто-кучевые (Stratocumulus, Sc)
+  C. Высоко-слоистые (Altostratus, As)
+  D. Перисто-кучевые (Cirrocumulus, Cc)
+options:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+correct: "A"

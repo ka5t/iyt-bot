@@ -1,0 +1,14 @@
+image: cloud_altostratus.png
+question: |
+  Какие это облака?
+
+  A. Высоко-слоистые (Altostratus, As)
+  B. Кучево-дождевые (Cumulonimbus, Cb)
+  C. Перисто-кучевые (Cirrocumulus, Cc)
+  D. Перистые (Cirrus, Ci)
+options:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+correct: "A"

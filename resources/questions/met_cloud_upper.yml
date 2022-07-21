@@ -1,0 +1,13 @@
+question: |
+  Это облако НЕ является облаком верхнего слоя
+
+  A) Перисто-слоистые (Cirrostratus, Cs)
+  B) Перистые (Cirrus, Ci)
+  C) Высоко-кучевые (Altocumulus, Ac)
+  D) Перисто-кучевые (Cirrocumulus, Cc)
+options:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+correct: "C"

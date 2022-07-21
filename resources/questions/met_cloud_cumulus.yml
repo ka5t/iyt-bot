@@ -1,0 +1,14 @@
+image: cloud_cumulus.png
+question: |
+  Какие это облака?
+
+  A. Кучево-дождевые (Cumulonimbus, Cb)
+  B. Слоисто-дождевые (Nimbostratus, Ns)
+  C. Перисто-слоистые (Cirrostratus, Cs)
+  D. Кучевые (Cumulus, Cu)
+options:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+correct: "D"

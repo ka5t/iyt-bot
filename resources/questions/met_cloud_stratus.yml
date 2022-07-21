@@ -1,0 +1,14 @@
+image: cloud_stratus.png
+question: |
+  Какие это облака?
+
+  A. Перисто-слоистые (Cirrostratus, Cs)
+  B. Слоистые (Stratus, St)
+  C. Кучевые (Cumulus, Cu)
+  D. Слоисто-дождевые (Nimbostratus, Ns)
+options:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+correct: "B"

@@ -1,0 +1,14 @@
+image: cloud_nimbostratus.png
+question: |
+  Какие это облака?
+
+  A. Высоко-кучевые (Altocumulus, Ac)
+  B. Перистые (Cirrus, Ci)
+  C. Кучево-дождевые (Cumulonimbus, Cb)
+  D. Слоисто-дождевые (Nimbostratus, Ns)
+options:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+correct: "D"

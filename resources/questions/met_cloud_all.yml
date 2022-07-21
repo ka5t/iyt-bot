@@ -1,0 +1,11 @@
+question: |
+  Это облако НЕ настолько велико, чтобы закрывать все три слоя
+
+  A) Слоисто-дождевые (Nimbostratus, Ns)
+  B) Кучевые (Cumulus, Cu)
+  C) Кучево-дождевые (Cumulonimbus, Cb)
+options:
+  - "A"
+  - "B"
+  - "C"
+correct: "B"

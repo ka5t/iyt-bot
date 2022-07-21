@@ -1,0 +1,14 @@
+image: cloud_cirrus.png
+question: |
+  Какие это облака?
+
+  A.  Перисто-слоистые (Cirrostratus, Cs)
+  B.  Высоко-кучевые (Altocumulus, Ac)
+  C.  Перистые (Cirrus, Ci)
+  D.  Кучевые (Cumulus, Cu)
+options:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+correct: "C"

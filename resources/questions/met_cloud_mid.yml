@@ -1,0 +1,11 @@
+question: |
+  Это облако НЕ является облаком среднего слоя
+
+  A) Слоистые (Stratus, St)
+  B) Высоко-кучевые (Altocumulus, Ac)
+  C) Высоко-слоистые (Altostratus, As)
+options:
+  - "A"
+  - "B"
+  - "C"
+correct: "A"

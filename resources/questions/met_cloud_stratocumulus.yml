@@ -1,0 +1,14 @@
+image: cloud_stratocumulus.png
+question: |
+  Какие это облака?
+
+  A. Кучево-дождевые (Cumulonimbus, Cb)
+  B. Слоисто-кучевые (Stratocumulus, Sc)
+  C. Высоко-кучевые (Altocumulus, Ac)
+  D. Слоистые (Stratus, St)
+options:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+correct: "B"
