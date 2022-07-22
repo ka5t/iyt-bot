@@ -30,7 +30,12 @@ KEYBOARDS = {
 
 def ask_question(uid: str, bot: telebot.TeleBot, storage: BaseStorage, keyboardType: str = "inline") -> None:
     log.debug(f"Asking {uid} question")
-    name, question = questionnaire.pick_question()
+    try:
+        weights = storage.get(f"stats_{uid}")
+    except KeyError:
+        log.warning(f"User {uid} has no history")
+        weights = {}
+    name, question = questionnaire.pick_weighted_question(weights=weights)
     storage.set(uid, name)
     log.debug(f"Stored question {name} for {uid}")
 
@@ -46,7 +51,7 @@ def ask_question(uid: str, bot: telebot.TeleBot, storage: BaseStorage, keyboardT
         bot.send_message(uid, question["question"], reply_markup=markup)
 
 
-def _check_answer(uid: str, answer: str, storage: BaseStorage) -> tuple[bool, str]:
+def _check_answer(uid: str, answer: str, storage: BaseStorage) -> tuple[bool, str, str]:
     """
     :raises KeyError: in case if storage does not containt current question for user
     """
@@ -54,14 +59,31 @@ def _check_answer(uid: str, answer: str, storage: BaseStorage) -> tuple[bool, st
     q = storage.get(uid)
     correct_answer = str(questionnaire.get_answer(q))
     log.debug(f"{uid} provided `{answer}`; correct one is `{correct_answer}`")
-    return (answer == correct_answer, correct_answer)
+    return (answer == correct_answer, q, correct_answer)
+
+
+def _increment_stats(uid: str, q: str, storage: BaseStorage) -> None:
+    score = 1
+    user_stats = {}
+    try:
+        user_stats = storage.get(f"stats_{uid}")
+        score += user_stats[q]
+    except KeyError:
+        pass
+    log.debug(f"User {uid} answered correctly on {q}, new score is {score}")
+    user_stats[q] = score
+    storage.set(f"stats_{uid}", user_stats)
 
 
 def check_answer(uid: str, answer: str, bot: telebot.TeleBot, storage: BaseStorage, phrases: dict[str, str]):
     try:
         log.debug(f"Checkin {answer}")
-        success, correct = _check_answer(uid, answer, storage)
-        msg = phrases["correct"] if success else f"{phrases['incorrect']} {correct}"
+        success, q, correct = _check_answer(uid, answer, storage)
+        if success:
+            msg = phrases["correct"]
+            _increment_stats(uid, q, storage)
+        else:
+            msg = f"{phrases['incorrect']} {correct}"
         log.debug(f"Sending results of {uid} answer")
         bot.send_message(
             uid,
