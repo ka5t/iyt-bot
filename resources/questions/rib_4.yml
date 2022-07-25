@@ -1,0 +1,13 @@
+question: |
+  Веревка на носу маленькой динги называется
+
+  A) Швартовый конец (Mooring line)
+  B) Якорный конец (Anchor line)
+  C) Носовой конец (Bow line)
+  D) "Поводок" (Painter)
+options:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+correct: "D"
