@@ -1,0 +1,13 @@
+question: |
+  Когда ветер приходит в правый борт, лодка находится на: _____________
+
+  A) Левом галсе (Port tack)
+  B) Правом галсе (Starboard tack)
+  C) Левом фордевинде (Port gybe)
+  D) Правом фордевинде (Starboard gybe)
+options:
+  - "A"
+  - "B"
+  - "C"
+  - "D"
+correct: "B"
