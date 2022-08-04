@@ -7,8 +7,8 @@ question: |
    D) Демаркация
 
 options:
-- A
-- B
-- C
-- D
+   - A
+   - B
+   - C
+   - D
 correct: А
